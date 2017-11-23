@@ -1,0 +1,41 @@
+<ion-view title="Contactos">
+  <ion-header-bar class="bar-balanced bar-subheader">
+    <ion-search placeholder="Buscar contacto" filter="search"></ion-search>
+  </ion-header-bar>
+      
+  <ion-content ng-init="init()" class="has-subheader">
+    
+    <ion-refresher
+      pulling-text="Pull to refresh..."
+      on-refresh="doRefresh()">
+    </ion-refresher>
+    
+    <ion-list>
+      <ion-item ng-repeat="contact in contacts | filter:search.value" type="item-text-wrap" href="#/contact/{{contact.id}}">
+        {{contact.name}}
+
+        <ion-option-button class="button-assertive icon ion-trash-a" ng-click="deleteContact(contact.id)"></ion-option-button>
+      </ion-item>
+    </ion-list>
+
+    <div class="empty" ng-show="contacts.length == 0">
+      <div class="empty-icon ion-person-stalker"></div>
+      <p>No tiene ningún contacto</p>
+    </div>
+
+    <ion-infinite-scroll
+      on-infinite="loadMore()"
+      distance="2"
+      ng-if="moredata">
+    </ion-infinite-scroll>
+
+  </ion-content>
+
+  <ion-footer-bar class="bar-balanced">
+    <div class="button-bar">
+      <a class="button" ng-click="getType()">Todos</a>
+      <a class="button" ng-click="getType('client')">Clientes</a>
+      <a class="button" ng-click="getType('provider')">Proveedores</a>
+    </div>
+  </ion-footer-bar>
+</ion-view>

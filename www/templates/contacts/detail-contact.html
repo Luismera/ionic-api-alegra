@@ -1,0 +1,46 @@
+<ion-view title="Detalle">
+
+	<ion-nav-bar class="bar-balanced">
+    <ion-nav-back-button></ion-nav-back-button>
+    <ion-nav-buttons side="right">
+    	<button class="button button-icon ion-trash-a" ng-click="deleteContact(contact.id)"></button>
+    </ion-nav-buttons>
+	</ion-nav-bar>
+
+	<ion-content ng-init="init()" class="view-detail">
+  		
+  		<div class="head-detail">
+		    <h2 class="name">{{contact.name}}</h2>
+		    <div class="nit" ng-show="contact.identification">Nit. {{contact.identification}}</div>
+
+  			<a ng-show="contact.email" class="button btn-left" href="mailto:{{contact.email}}"><i class="material-icons">email</i></a>
+  			<a ng-show="contact.phonePrimary" class="button btn-right" href="tel:{{contact.phonePrimary}}"><i class="material-icons">local_phone</i></a>
+  		</div> 
+	    <div class="card card-top" ng-show="contact.phonePrimary || contact.phoneSecondary || contact.fax || contact.address.address || contact.address.city || contact.email || contact.mobile">
+			<div class="list">
+			    <li class="item" ng-show="contact.email"><i class="material-icons">email</i>{{contact.email}}</li>
+			    <li class="item" ng-show="contact.mobile"><i class="material-icons">phone_iphone</i>{{contact.mobile}}</li>
+			    <li class="item" ng-show="contact.phonePrimary"><i class="material-icons">local_phone</i>{{contact.phonePrimary}}</li>
+			    <li class="item" ng-show="contact.phoneSecondary"><i class="material-icons">local_phone</i>{{contact.phoneSecondary}}</li>
+			    <li class="item" ng-show="contact.fax"><i class="material-icons">local_printshop</i>{{contact.fax}}</li>	
+			    <li class="item" ng-show="contact.address.address"><i class="material-icons">location_on</i>{{contact.address.address}} / {{contact.address.city}}</li>
+			</div>
+		</div>
+		<div class="card" ng-show="contact.type.length != 0">
+			<div class="item item-divider">
+			    Tipo
+			</div>
+			<div class="list">
+			    <li class="item" ng-repeat="type in typeContact">{{type}}</li>
+			</div>
+		</div>
+		<div class="card" ng-show="contact.observations">
+			<div class="item item-divider">
+			    Observaciones
+			</div>
+			<div class="item item-text-wrap">
+			    {{contact.observations}}
+			</div>
+		</div>
+	</ion-content>
+</ion-view>

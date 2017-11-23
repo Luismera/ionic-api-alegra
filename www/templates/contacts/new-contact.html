@@ -1,0 +1,72 @@
+<ion-modal-view ng-controller="NewContactController">
+  <ion-header-bar align-title="center">
+    <button class="button button-icon" ng-click="closeModal()"><i class="material-icons">close</i></button>
+    <h1 class="title">Nuevo contacto</h1>
+    <button class="button button-icon" type="submit" form="contactForm"><i class="material-icons">check</i></button>
+  </ion-header-bar>
+
+  <ion-content>
+  	<form name="contactForm" id="contactForm" novalidate="" ng-submit="saveContact(contact, contactForm)">
+  		<div class="alert" ng-show="message"><i class="large material-icons">error_outline</i> {{message}}</div>
+  		<div class="alert" ng-show="contactForm.email.$invalid && !contactForm.email.$pristine"><i class="large material-icons">error_outline</i> El correo electrónico no es valido</div>
+  		<div class="alert" ng-show="contactForm.name.$error.maxlength"><i class="large material-icons">error_outline</i> El nombre del contacto es muy largo.</div>
+  		<div class="alert" ng-show="contactForm.email.$error.maxlength"><i class="large material-icons">error_outline</i> El correo electrónico es muy largo.</div>
+  		<div class="alert" ng-show="contactForm.phone.$error.maxlength"><i class="large material-icons">error_outline</i> El teléfono es muy largo.</div>
+		<div class="alert" ng-show="contactForm.name.$error && contactForm.$submitted && contactForm.name.$pristine"><i class="large material-icons">error_outline</i> El nombre es obligatorio</div>
+		<div class="alert" ng-show="contactForm.phone.$error && contactForm.$submitted && contactForm.phone.$pristine"><i class="large material-icons">error_outline</i> El teléfono es obligatorio</div>
+		<div class="alert" ng-show="contactForm.email.$error && contactForm.$submitted && contactForm.email.$pristine"><i class="large material-icons">error_outline</i> El correo electrónico es obligatorio</div>
+  		
+  		<div class="list list-inset">
+  			<div class="item item-divider">Información básica</div>
+		  <label class="item item-input">
+		    <input type="text" name="name" placeholder="Nombre" ng-model="contact.name" ng-maxlength="90" required>			    
+		    <p class="require" ng-show="contactForm.name.$error.required">*</p>
+		  </label>
+		  <label class="item item-input">
+		    <input type="email" name="email" placeholder="Correo electrónico" ng-model="contact.email" ng-maxlength="100" required>
+		    <p class="require" ng-show="contactForm.email.$error.required">*</p>
+		  </label>		
+		  <label class="item item-input">
+		    <input type="text" name="phone" placeholder="Teléfono" ng-model="contact.phonePrimary" ng-maxlength="45" required>
+		    <p class="require" ng-show="contactForm.phone.$error.required">*</p>
+		  </label>
+		</div>
+
+  		<div class="list list-inset">
+	  		<div class="item item-divider">Detalles de contacto</div>
+	  		<label class="item item-input">
+			    <input type="text" placeholder="NIT o Cédula de Ciudadanía" ng-model="contact.identification">
+			  </label>	
+	  		<label class="item item-input">
+			    <input type="text" placeholder="Dirección" ng-model="contact.address.address">
+			  </label>
+			  <label class="item item-input">
+			    <input type="text" placeholder="Ciudad" ng-model="contact.address.city">
+			  </label>
+			  <label class="item item-input">
+			    <input type="text" placeholder="Teléfono (opcional)" ng-model="contact.phoneSecondary">
+			  </label>
+			  <label class="item item-input">
+			    <input type="text" placeholder="Celular" ng-model="contact.mobile">
+			  </label>			    
+			  <label class="item item-input">
+			    <input type="text" placeholder="Fax" ng-model="contact.fax">
+			  </label>
+			</div>
+
+  		<div class="list list-inset">
+  			<div class="item item-divider">Tipo</div>		
+			<ion-checkbox ng-repeat="type in types" name="type[]" value="{{type.value}}" ng-checked="selection.indexOf(type.value) > -1" ng-click="toggleSelectionTypes(type.value)">{{type.name}}</ion-checkbox>
+		</div>
+
+  		<div class="list list-inset">
+	  		<div class="item item-divider">Observaciones</div>		  
+			  <label class="item item-input">
+			    <textarea ng-model="contact.observations"></textarea>
+			  </label>
+			</div>
+		</form>
+  </ion-content>
+  
+</ion-modal-view>
+
